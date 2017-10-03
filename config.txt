@@ -1,0 +1,243 @@
+# Smoothieboard configuration file, see http://smoothieware.org/configuring-smoothie
+# NOTE Lines must not exceed 132 characters, and '#' characters mean what follows is ignored
+## Robot module configurations : general handling of movement G-codes and slicing into moves
+
+
+# Delta configuration
+# See http://smoothieware.org/delta
+arm_solution                                 linear_delta     # Ñ¡Ôñ»úĞÍÎªÈı½ÇÖŞ
+arm_length                                   147.59           # Ì¼¸ËµÄ³¤¶È
+arm_radius                                   61.2182           # ¹éÁãºóÌ¼¸ËµÄË®Æ½³¤¶È
+gamma_max                                    150              # ZÖáµÄ¸ß¶È
+
+
+alpha_steps_per_mm                           100              # XÖáÔË¶¯1mmĞèÒªµÄ²½½øÊı
+beta_steps_per_mm                            100              # YÖá
+gamma_steps_per_mm                           100              # ZÖá
+extruder.hotend.steps_per_mm                 395              # EÖáÔË¶¯1mmĞèÒªµÄ²½½øÊı
+
+# Cartesian axis speed limits
+x_axis_max_speed                             12000            # XÖá×î´óÒÆ¶¯ËÙÂÊ mm/min
+y_axis_max_speed                             12000            # YÖá
+z_axis_max_speed                             12000            # ZÖá
+
+alpha_max_rate                               12000.0          # XÖá×î´óËÙÂÊ mm/min
+beta_max_rate                                12000.0          # Maxmimum rate in mm/min
+gamma_max_rate                               12000.0          # Maximum rate in mm/min
+
+# Basic motion configuration
+default_feed_rate                            2400             # G1/G2/G3µÄÄ¬ÈÏËÙÂÊ(mm/minute)
+default_seek_rate                            2400             # G0µÄÄ¬ÈÏËÙÂÊ (mm/minute)
+mm_per_arc_segment                           0.5              # Ô²»¡·Ö¶ÎµÄ¹Ì¶¨³¤¶È, 0 to disable
+mm_max_arc_error                             0.01             # The maximum error for line segments that divide arcs 0 to disable
+								# note it is invalid for both the above be 0
+								# if both are used, will use largest segment length based on radius
+delta_segments_per_second                    100              # Èı½ÇÖŞ¶ÀÓĞµÄÅäÖÃ, Ã¿ÃëÖÓ»®·ÖµÄÏß¶ÎÊıÁ¿, set to 0 to disable
+								# and use mm_per_line_segment
+#mm_per_line_segment                         5                # Ö±Ïß·Ö¶ÎµÄ³¤¶È
+
+
+
+# Planner module configuration : Look-ahead and acceleration configuration
+# See http://smoothieware.org/motion-control
+acceleration                                 3000             # ¼ÓËÙ¶È mm/s^2
+#z_acceleration                              500              # ZÖá¼ÓËÙ¶È mm/s^2, 0 uses acceleration which is the default. DO NOT SET ON A DELTA
+junction_deviation                           0.05             # See http://smoothieware.org/motion-control#junction-deviation
+#z_junction_deviation                        0.0              # For Z only moves, -1 uses junction_deviation, zero disables junction_deviation on z moves DO NOT SET ON A DELTA
+
+
+# Stepper module configuration 
+# Pins are defined as  ports, and pin numbers, appending "!" to the number will invert a pin
+# See http://smoothieware.org/pin-configuration and http://smoothieware.org/pinout
+
+alpha_dir_pin                                0.5!              # XÖáµÄ·½Ïòstepper direction¹Ü½Å, add '!' to ·­×ªµç»úÔË×ª·½Ïò
+beta_dir_pin                                 0.11!             # Pin for beta stepper direction, add '!' to reverse direction
+gamma_dir_pin                                0.20!             # Pin for gamma stepper direction, add '!' to reverse direction
+extruder.hotend.dir_pin                      0.22!     	      # ¼·³öµÄ·½Ïòdir signal¹Ü½Å ( add '!' to ·­×ªµç»úÔË×ª·½Ïò)
+
+
+
+alpha_step_pin                               2.0              # XÖáµÄstep signal¹Ü½Å
+beta_step_pin                                2.1              # Pin for beta stepper step signal
+gamma_step_pin                               2.2              # Pin for gamma stepper step signal
+extruder.hotend.step_pin                     2.3              # ¼·³öµÄstep signal¹Ü½Å
+
+
+alpha_en_pin                                 0.4              # XÖáÊ¹ÄÜ¹Ü½Å
+beta_en_pin                                  0.10             # Pin for beta enable
+gamma_en_pin                                 0.19             # Pin for gamma enable
+extruder.hotend.en_pin                       0.21             # ¼·³öµÄÊ¹ÄÜĞÅºÅ
+
+alpha_current                                0.8              # XÖáÇı¶¯µçÁ÷
+beta_current                                 0.8              # Y stepper motor current
+gamma_current                                0.8              # Z stepper motor current
+delta_current                                0.8              # ¼·³ö»ú1µÄÇı¶¯µçÁ÷
+
+## Extruder module configuration
+# See http://smoothieware.org/extruder
+
+extruder.hotend.enable                          true          # Ê¹ÄÜ¼·³ö»ú£¬Èç¹ûÎªfalse£¬Ïà¹ØµÄÅäÖÃ¶¼½«±»ºöÂÔ
+extruder.hotend.default_feed_rate               6000           # ¼·³öµÄÄ¬ÈÏËÙÂÊ ( mm/minute )
+extruder.hotend.acceleration                    500           # ¼·³öµÄ¼ÓËÙ¶Èmm/s^2
+extruder.hotend.max_speed                       200            # ×î´ó¼·³öËÙ¶È mm/s
+
+
+
+
+laser_module_enable                           false           # falseÊ§ÄÜ¼¤¹âÄ£Ê½
+
+## Temperature control configuration
+# See http://smoothieware.org/temperaturecontrol
+
+# First hotend configuration
+temperature_control.hotend.enable            true             # Ê¹ÄÜhotend
+temperature_control.hotend.thermistor_pin    0.24             # ÈÈÃôµç×èÁ¬½ÓµÄ¹Ü½Å
+temperature_control.hotend.heater_pin        2.7              # ¼ÓÈÈ°ôÁ¬½ÓµÄ¹Ü½Å, Èç¹û²»ĞèÒªÉèÖÃÎª nc 
+temperature_control.hotend.thermistor        EPCOS100K        # See http://smoothieware.org/temperaturecontrol#toc5
+temperature_control.hotend.set_m_code        104              # ÉèÖÃÎÂ¶ÈµÄM-code
+temperature_control.hotend.set_and_wait_m_code 109            # ÉèÖÃ²¢ÇÒµÈ´ıÎÂ¶È´ïµ½Ä¿±êµÄM-code
+temperature_control.hotend.designator        T                # Õâ¸öÄ£¿éµÄÃû³Æ
+
+# PID configuration 
+# See http://smoothieware.org/temperaturecontrol#pid
+temperature_control.hotend.p_factor         22.2             # P ( proportional ) factor
+temperature_control.hotend.i_factor         1.08            # I ( integral ) factor
+temperature_control.hotend.d_factor         114               # D ( derivative ) factor
+
+#temperature_control.hotend.max_pwm          64               # Max pwm, 64 is a good value if driving a 12v resistor with 24v.
+
+
+temperature_control.bed.enable               false             # Ê¹ÄÜÈÈ´²
+temperature_control.bed.thermistor_pin       0.23            # ÈÈÃôµç×èÁ¬½ÓµÄ¹Ü½Å
+temperature_control.bed.heater_pin           2.5              # ¼ÓÈÈÈÈ´²µÄ¹Ü½Å
+temperature_control.bed.thermistor           EPCOS100K   # See http://smoothieware.org/temperaturecontrol#thermistor
+temperature_control.bed.set_m_code           140              # ÉèÖÃÈÈ´²Ä¿±êÎÂ¶ÈµÄM-code
+temperature_control.bed.set_and_wait_m_code  190              # ÉèÖÃ²¢µÈ´ıÈÈ´²´ïµ½Ä¿±êÎÂ¶ÈµÄM-code
+temperature_control.bed.designator           B                # ÈÈ´²µÄÃû³Æ
+
+
+## Switch modules
+# See http://smoothieware.org/switch
+
+# Switch module for fan control
+switch.fan.enable                            true             # Ê¹ÄÜ·çÉÈ
+switch.fan.input_on_command                  M106             # ¿ª·çÉÈµÄM-code
+switch.fan.input_off_command                 M107             # ¹Ø·çÉÈµÄM-code
+switch.fan.output_pin                        2.4              # Á¬½Ó·çÉÈµÄ¹Ü½Å
+switch.fan.output_type                       pwm              # PWM output settable with S parameter in the input_on_comand
+switch.fan.max_pwm                           255              # Set max pwm for the pin default is 255
+
+
+## Endstops
+# See http://smoothieware.org/endstops
+endstops_enable                              true             # Ê¹ÄÜÏŞÎ»¿ª¹Ø
+delta_homing                                 true             # Ê¹ÄÜG28¹éÁã
+alpha_min_endstop                            nc               # Pin to read min endstop, add a ! to invert if endstop is NO connected to ground
+alpha_max_endstop                            1.25^            # Pin to read max endstop, uncomment this and comment the above if using max endstops
+alpha_homing_direction                       home_to_max      # Or set to home_to_max and set alpha_max and uncomment the alpha_max_endstop
+alpha_max                                    0                # This gets loaded as the current position after homing when home_to_max is set
+beta_min_endstop                             nc               # Pin to read min endstop, add a ! to invert if endstop is NO connected to ground
+beta_max_endstop                             1.27^            # Pin to read max endstop, uncomment this and comment the above if using max endstops
+beta_homing_direction                        home_to_max      # Or set to home_to_max and set alpha_max and uncomment the alpha_max_endstop
+beta_max                                     0                # This gets loaded as the current position after homing when home_to_max is set
+gamma_min_endstop                            nc               # Pin to read min endstop, add a ! to invert if endstop is NO connected to ground
+gamma_max_endstop                            1.29^            # Pin to read max endstop, uncomment this and comment the above if using max endstops
+gamma_homing_direction                       home_to_max      # Or set to home_to_max and set alpha_max and uncomment the alpha_max_endstop
+
+alpha_max_travel                             1000             # ¹éÁãÊ±XÖáÒÆ¶¯µÄ×î´ó¾àÀëmm
+beta_max_travel                              1000             # 
+gamma_max_travel                             1000             # 
+
+# Endstops home at their fast feedrate first, then once the endstop is found they home again at their slow feedrate for accuracy
+alpha_fast_homing_rate_mm_s                  100              # xÖáfast homingËÙÂÊmm/second
+alpha_slow_homing_rate_mm_s                  20               # Alpha tower slow homing feedrate in mm/second
+beta_fast_homing_rate_mm_s                   100              # Beta  tower fast homing feedrate in mm/second
+beta_slow_homing_rate_mm_s                   20               # Beta  tower slow homing feedrate in mm/second
+gamma_fast_homing_rate_mm_s                  100              # Gamma tower fast homing feedrate in mm/second
+gamma_slow_homing_rate_mm_s                  20               # Gamma tower slow homing feedrate in mm/second
+
+alpha_homing_retract_mm                      5                # Distance to retract from the endstop after it is hit for alpha/X
+beta_homing_retract_mm                       5                # Distance to retract from the endstop after it is hit for beta/Y
+gamma_homing_retract_mm                      5                # Distance to retract from the endstop after it is hit for gamma/Z
+
+
+# Endstop debouncing options
+#endstop_debounce_count                       100              # Uncomment if you get noise on your endstops, default is 100
+#endstop_debounce_ms                          1                # Uncomment if you get noise on your endstops, default is 1 millisecond debounce
+
+# Endstop trim options
+alpha_trim                                    0                # Software trim for alpha stepper endstop (in mm)
+beta_trim                                     0                # Software trim for beta stepper endstop (in mm)
+gamma_trim                                    0                # Software trim for gamma stepper endstop (in mm)
+
+
+## Z-probe
+# See http://smoothieware.org/zprobe
+zprobe.enable                                true            # Ê¹ÄÜzprobe
+zprobe.probe_pin                             1.28!^          # Pin probe is attached to, if NC remove the !
+zprobe.slow_feedrate                         30               # Mm/sec probe feed rate
+#zprobe.debounce_count                       100             # Set if noisy
+zprobe.fast_feedrate                         50             # Move feedrate mm/sec
+zprobe.probe_height                          10               # How much above bed to start probe
+#gamma_min_endstop                           nc              # Normally 1.28. Change to nc to prevent conflict,
+
+# Levelling strategy
+
+
+# Example for the delta grid leveling strategy
+leveling-strategy.delta-grid.enable               true     # Ê¹ÄÜÍø¸ñµ÷Æ½
+leveling-strategy.delta-grid.radius               45     # µ÷Æ½µÄ°ë¾¶
+leveling-strategy.delta-grid.size                 5 	   # µ÷Æ½µÄÍø¸ñÊı£¨±ØĞëÎªÆæÊı£©
+leveling-strategy.delta-grid.probe_offsets        0,0,-0.3    # 
+leveling-strategy.delta-grid.save                 true    # 
+leveling-strategy.delta-grid.initial_height       10       # 
+
+## Panel
+# See http://smoothieware.org/panel
+# Please find your panel on the wiki and copy/paste the right configuration here
+panel.enable                                true	            # Ê¹ÄÜÏÔÊ¾ÆÁÉèÖÃ
+panel.lcd                                   reprap_discount_glcd     #
+panel.spi_channel                           0                 # spi channel to use  ; GLCD EXP1 Pins 3,5 (MOSI, SCLK)
+panel.spi_cs_pin                            0.16              # spi chip select     ; GLCD EXP1 Pin 4
+panel.encoder_a_pin                         3.25!^            # encoder pin         ; GLCD EXP2 Pin 3
+panel.encoder_b_pin                         3.26!^            # encoder pin         ; GLCD EXP2 Pin 5
+panel.click_button_pin                      1.30!^            # click button        ; GLCD EXP1 Pin 2
+panel.buzz_pin                              1.31              # pin for buzzer      ; GLCD EXP1 Pin 1
+panel.back_button_pin                       2.11!^            # back button         ; GLCD EXP2 Pin 8 or
+panel.external_sd                     false              # set to true if there is an extrernal sdcard on the panel
+panel.external_sd.spi_channel         1                 # set spi channel the sdcard is on
+panel.external_sd.spi_cs_pin          0.28             # set spi chip select for the sdcard (or any spare pin)
+panel.external_sd.sdcd_pin            0.27!^            # sd detect signal (set to nc if no sdcard detect) (or any spare pin)
+
+
+panel.menu_offset                            1                 # some panels will need 1 here
+panel.alpha_jog_feedrate                     6000              # x jogging feedrate in mm/min
+panel.beta_jog_feedrate                      6000              # y jogging feedrate in mm/min
+panel.gamma_jog_feedrate                     3000               # z jogging feedrate in mm/min
+
+panel.hotend_temperature                     185               # temp to set hotend when preheat is selected
+panel.bed_temperature                        60                # temp to set bed when preheat is selected
+
+
+
+custom_menu.power_on.enable                false              #
+custom_menu.power_off.enable               false              #
+
+
+network.enable                               false            # Enable the ethernet network services
+network.webserver.enable                     false             # Enable the webserver
+network.telnet.enable                        false             # Enable the telnet server
+network.ip_address                           false             # Use dhcp to get ip address
+
+
+## System configuration
+# Serial communications configuration ( baud rate defaults to 9600 if undefined )
+# For communication over the UART port, *not* the USB/Serial port
+uart0.baud_rate                              115200           # Baud rate for the default hardware ( UART ) serial port
+
+second_usb_serial_enable                     false            # This enables a second USB serial port
+
+
+
+currentcontrol_module_enable                 false             # Control stepper motor current via the configuration fill
+ÿ
